@@ -99,7 +99,7 @@ commit格式为`[feat]: xxx`，比如`[feat]: add user model`，如果是修复b
 
 ## 项目结构
 
-```
+```bash
 LICENSE：项目的开源许可证文件。
 README.md：项目的说明文档，一般用markdown格式编写。
 pycache：Python解释器自动生成的目录，用于缓存编译后的Python代码。一般不需要手动管理。

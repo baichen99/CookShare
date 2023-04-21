@@ -23,7 +23,7 @@ class AdminSignIn(BaseModel):
     class Config:
         schema_extra = {
             "example": {
-                "email": "admin",
+                "email": "admin@example.com",
                 "password": "password"
             }
         }
