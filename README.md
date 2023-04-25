@@ -1,3 +1,5 @@
+# CookShare
+
 ## 搭建环境
 
 ### MongoDB
@@ -41,6 +43,7 @@
     ```bash
     show dbs
     ```
+
 2. 查看当前数据库
 
     ```bash
@@ -91,7 +94,7 @@ pip install fastapi beanie
 
 5. 提交PR
 
-**P.S. **
+**P.S.**
 
 请在提交PR之前先同步远程仓库的代码
 
@@ -102,7 +105,6 @@ commit格式为`[feat]: xxx`，比如`[feat]: add user model`，如果是修复b
 ```bash
 LICENSE：项目的开源许可证文件。
 README.md：项目的说明文档，一般用markdown格式编写。
-pycache：Python解释器自动生成的目录，用于缓存编译后的Python代码。一般不需要手动管理。
 app.py：FastAPI应用程序的入口文件。
 auth：存放JWT授权相关的代码。
 jwt_bearer.py：实现JWT的Bearer认证。
@@ -121,4 +123,3 @@ admin.py：实现管理员相关的路由和API。
 services：存放应用程序的业务逻辑。
 admin.py：实现管理员相关的业务逻辑。
 ```
-
