@@ -15,7 +15,7 @@ class Admin(BaseModel):
             }
         }
 
-class AdminSignIn(BaseModel):
+class AdminLogin(BaseModel):
     email: EmailStr
     password: str
 
