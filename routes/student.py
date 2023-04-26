@@ -40,7 +40,7 @@ async def list_students(query: StudentQuery, token: str = Depends(jwt_bearer)):
         raise JSONException(status_code=401, error_msg="Unauthorized")
     students = await get_students(query)
 
-    students = [student.copy(update={"id": str(student.id)}) for student in students]
+    students = [student.to_dict() for student in students]
     return StudentListResponse(
         skip=query.skip+1,
         limit=query.limit,
@@ -51,11 +51,7 @@ async def list_students(query: StudentQuery, token: str = Depends(jwt_bearer)):
 @router.get('/{id}', tags=['Student'], description='Get student', response_model=StudentResponse)
 async def get_student(id: str):
     student = await get_student_by_id(id)
-    return StudentResponse(
-        id=str(student.id),
-        username=student.username,
-        email=student.email
-    )
+    return student.to_dict()
 
 @router.put("/{id}", tags=["Student"], description="Update student", response_model=StudentResponse)
 async def update(id: str, form: StudentUpdate, token: str = Depends(jwt_bearer)):
@@ -67,9 +63,4 @@ async def update(id: str, form: StudentUpdate, token: str = Depends(jwt_bearer))
     if student and str(student.id) != id:
         raise JSONException(status_code=400, error_msg="Email already exists")
     student = await update_student(id, form)
-    return StudentResponse(
-        id=str(student.id),
-        username=student.username,
-        email=student.email
-    )
-
+    return student.to_dict()

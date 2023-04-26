@@ -14,6 +14,16 @@ class Student(Document):
 
     class Settings:
         collection = "student"
+        
+    def to_dict(self):
+        d = {}
+        for k, v in self.dict().items():
+            # convert ObjectId to str
+            if k == 'id':
+                d['id'] = str(v)
+            else:
+                d[k] = v
+        return d
 
 
 async def get_student_by_id(id: PydanticObjectId):
