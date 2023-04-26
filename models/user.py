@@ -3,7 +3,7 @@ from pydantic import BaseModel, EmailStr, Field
 from enum import IntEnum
 
 
-class StudentLogin(BaseModel):
+class UserLogin(BaseModel):
     email: EmailStr
     password: str
 
@@ -11,12 +11,12 @@ class StudentLogin(BaseModel):
     class Config:
         schema_extra = {
             "example": {
-                "email": "student@example.com",
+                "email": "user@example.com",
                 "password": "password"
             }
         }
 
-class StudentRegister(BaseModel):
+class UserRegister(BaseModel):
     username: str
     email: EmailStr
     password: str
@@ -25,13 +25,13 @@ class StudentRegister(BaseModel):
     class Config:
         schema_extra = {
             "example": {
-                "username": "student",
+                "username": "user",
                 "email": "user@email.com",
                 "password": "password"
             }
         }
 
-class StudentResponse(BaseModel):
+class UserResponse(BaseModel):
     id: str
     username: str
     email: EmailStr
@@ -40,12 +40,12 @@ class StudentResponse(BaseModel):
         schema_extra = {
             "example": {
                 "id": "1",
-                "username": "student",
-                "email": "student@mail.com",
+                "username": "user",
+                "email": "user@mail.com",
             }
         }
 
-class StudentUpdate(BaseModel):
+class UserUpdate(BaseModel):
     username: Optional[str]
     email: Optional[EmailStr]
     password: Optional[str]
@@ -54,8 +54,8 @@ class StudentUpdate(BaseModel):
     class Config:
         schema_extra = {
             "example": {
-                "username": "student",
-                "email": "student@mail.com",
+                "username": "user",
+                "email": "user@mail.com",
                 "password": "password"
             }
         }
@@ -64,7 +64,7 @@ class Order(IntEnum):
     asc = 1
     desc = -1
 
-class StudentQuery(BaseModel):
+class UserQuery(BaseModel):
     skip: int = 1
     limit: int = Field(ge=1, le=100, default=10)
     sort_by: str = "email"
@@ -76,8 +76,8 @@ class StudentQuery(BaseModel):
             "example": ""
         }
 
-class StudentListResponse(BaseModel):
+class UserListResponse(BaseModel):
     skip: int
     limit: int
     total: int
-    students: List[StudentResponse]
+    users: List[UserResponse]

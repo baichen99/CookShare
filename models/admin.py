@@ -42,4 +42,4 @@ class AdminResponse(BaseModel):
         }
         
 class AdminListResponse(BaseModel):
-    students: List[AdminResponse]
+    users: List[AdminResponse]

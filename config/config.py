@@ -4,7 +4,7 @@ from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseSettings
 from services.admin import Admin
-from services.student import Student
+from services.user import User
 from passlib.context import CryptContext
 
 
@@ -36,7 +36,7 @@ async def initiate_database():
         authSource=Settings().MONGO_DB_NAME,
     )
     await init_beanie(database=client.get_database(Settings().MONGO_DB_NAME),
-                      document_models=[Admin, Student])
+                      document_models=[Admin, User])
     await init_user()
 
 async def init_user():
@@ -47,12 +47,12 @@ async def init_user():
         admin = Admin(username="superadmin", email="admin@example.com", password=hashed_password)
         await admin.insert()
     
-    # create students
+    # create users
     for i in range(20):
         password = hash_helper.hash(f"password{i}")
-        student = await Student.find_one(Student.username == f"student{i}")
-        if student:
+        user = await User.find_one(User.username == f"user{i}")
+        if user:
             continue
-        student = Student(username=f"student{i}", email=f"student{i}@example.com", password=password)
-        await student.insert()
+        user = User(username=f"user{i}", email=f"user{i}@example.com", password=password)
+        await user.insert()
         
