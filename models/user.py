@@ -1,7 +1,7 @@
 from typing import Optional, List, Literal
 from pydantic import BaseModel, EmailStr, Field
 from enum import IntEnum
-
+from models.common import Order
 
 class UserLogin(BaseModel):
     email: EmailStr
@@ -11,8 +11,8 @@ class UserLogin(BaseModel):
     class Config:
         schema_extra = {
             "example": {
-                "email": "user@example.com",
-                "password": "password"
+                "email": "user1@example.com",
+                "password": "password1"
             }
         }
 
@@ -60,10 +60,6 @@ class UserUpdate(BaseModel):
             }
         }
 
-class Order(IntEnum):
-    asc = 1
-    desc = -1
-
 class UserQuery(BaseModel):
     skip: int = 1
     limit: int = Field(ge=1, le=100, default=10)
@@ -71,10 +67,6 @@ class UserQuery(BaseModel):
     order: Order = Order.asc
     username: Optional[str]
     email: Optional[EmailStr]
-    class Config:
-        schema_extra = {
-            "example": ""
-        }
 
 class UserListResponse(BaseModel):
     skip: int

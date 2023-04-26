@@ -1,5 +1,5 @@
-from fastapi import Request
-from fastapi.responses import JSONResponse
+from enum import IntEnum
 
-
-
+class Order(IntEnum):
+    asc = 1
+    desc = -1

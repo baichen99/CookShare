@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from routes.admin import router as admin_router
 from routes.user import router as user_router
+from routes.kitchen import router as kitchen_router
 from config.config import initiate_database
 from middlewares.error_handler import JSONException
 
@@ -29,3 +30,4 @@ async def read_root():
 
 app.include_router(admin_router, prefix="/admin", tags=["Admin"])
 app.include_router(user_router, prefix="/user", tags=["User"])
+app.include_router(kitchen_router, prefix="/kitchen", tags=["Kitchen"])

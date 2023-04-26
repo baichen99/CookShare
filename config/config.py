@@ -1,10 +1,10 @@
 from typing import Optional
-
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseSettings
 from services.admin import Admin
 from services.user import User
+from services.kitchen import Kitchen
 from passlib.context import CryptContext
 
 
@@ -36,7 +36,7 @@ async def initiate_database():
         authSource=Settings().MONGO_DB_NAME,
     )
     await init_beanie(database=client.get_database(Settings().MONGO_DB_NAME),
-                      document_models=[Admin, User])
+                      document_models=[Admin, User, Kitchen])
     await init_user()
 
 async def init_user():
