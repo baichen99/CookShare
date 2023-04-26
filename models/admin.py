@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from typing import List
 
 class Admin(BaseModel):
     username: str
@@ -29,11 +30,16 @@ class AdminLogin(BaseModel):
         }
         
 class AdminResponse(BaseModel):
+    username: str
     email: EmailStr
     # 用于OPENAPI文档
     class Config:
         schema_extra = {
             "example": {
-                "email": "admin",
+                "username": "admin",
+                "email": "admin@example.com",
             }
         }
+        
+class AdminListResponse(BaseModel):
+    students: List[AdminResponse]

@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from routes.admin import router as admin_router
+from routes.student import router as student_router
 from config.config import initiate_database
 from middlewares.error_handler import JSONException
 
@@ -27,3 +28,4 @@ async def read_root():
     return {"message": "Welcome to this fantastic app."}
 
 app.include_router(admin_router, prefix="/admin", tags=["Admin"])
+app.include_router(student_router, prefix="/student", tags=["Student"])

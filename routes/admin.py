@@ -1,6 +1,5 @@
 from fastapi import Depends, APIRouter
-from fastapi.exceptions import HTTPException
-from auth.jwt_handler import sign_jwt, decode_jwt
+from auth.jwt_handler import sign_jwt, decode_jwt, TokenResponse
 from auth.jwt_bearer import JWTBearer
 from models.admin import AdminLogin
 from services.admin import get_admin_by_email, get_admins
@@ -14,13 +13,13 @@ hash_helper = CryptContext(schemes=["bcrypt"])
 
 router = APIRouter()
 
-@router.post("/login", tags=["Admin"], description="Admin login")
+@router.post("/login", tags=["Admin"], description="Admin login", response_model=TokenResponse)
 async def login(form: AdminLogin):
     admin = await get_admin_by_email(form.email)
     if (not admin) or (not hash_helper.verify(form.password, admin.password)):
         raise JSONException(status_code=401, error_msg="Invalid credentials")
-    token_rsp = sign_jwt(str(admin.id), role='admin')
-    return token_rsp
+    token = sign_jwt(str(admin.id), role='admin')
+    return token
 
 @router.get("/", tags=["Admin"], description="Get all admins")
 async def list_admins(token: str = Depends(jwt_bearer)):
