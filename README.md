@@ -99,27 +99,3 @@ pip install fastapi beanie
 请在提交PR之前先同步远程仓库的代码
 
 commit格式为`[feat]: xxx`，比如`[feat]: add user model`，如果是修复bug，commit格式为`[fix]: xxx`，比如`[fix]: fix user model`
-
-## 项目结构
-
-```bash
-LICENSE：项目的开源许可证文件。
-README.md：项目的说明文档，一般用markdown格式编写。
-app.py：FastAPI应用程序的入口文件。
-auth：存放JWT授权相关的代码。
-jwt_bearer.py：实现JWT的Bearer认证。
-jwt_handler.py：实现JWT的生成和解析。
-config：存放应用程序配置相关的代码。
-config.py：存放应用程序的配置参数。
-data：存放MongoDB数据库文件。
-db：MongoDB的数据文件目录。
-docker-compose.yml：Docker Compose的配置文件。
-gitignore：git的忽略文件列表，列出了应该被忽略的文件和目录。
-main.py：应用程序的主要逻辑代码。
-models：存放应用程序的数据模型。
-admin.py：存放管理员数据模型。
-routes：存放应用程序的路由和API。
-admin.py：实现管理员相关的路由和API。
-services：存放应用程序的业务逻辑。
-admin.py：实现管理员相关的业务逻辑。
-```

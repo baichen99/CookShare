@@ -1,5 +1,4 @@
 from pydantic import BaseModel, EmailStr
-from typing import List
 
 class Admin(BaseModel):
     username: str
@@ -42,4 +41,4 @@ class AdminResponse(BaseModel):
         }
         
 class AdminListResponse(BaseModel):
-    users: List[AdminResponse]
+    users: list[AdminResponse]

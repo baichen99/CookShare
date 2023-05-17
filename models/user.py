@@ -1,7 +1,7 @@
-from typing import Optional, List, Literal
+from typing import Optional, Literal
 from pydantic import BaseModel, EmailStr, Field
-from enum import IntEnum
-from models.common import Order
+from beanie import PydanticObjectId
+from models.common import SortOrder
 
 class UserLogin(BaseModel):
     email: EmailStr
@@ -32,7 +32,7 @@ class UserRegister(BaseModel):
         }
 
 class UserResponse(BaseModel):
-    id: str
+    id: PydanticObjectId
     username: str
     email: EmailStr
     # 用于OPENAPI文档
@@ -59,12 +59,11 @@ class UserUpdate(BaseModel):
                 "password": "password"
             }
         }
-
 class UserQuery(BaseModel):
-    skip: int = 1
+    skip: int = 0
     limit: int = Field(ge=1, le=100, default=10)
     sort_by: str = "email"
-    order: Order = Order.asc
+    order: SortOrder = SortOrder.asc
     username: Optional[str]
     email: Optional[EmailStr]
 
@@ -72,4 +71,4 @@ class UserListResponse(BaseModel):
     skip: int
     limit: int
     total: int
-    users: List[UserResponse]
+    users: list[UserResponse]

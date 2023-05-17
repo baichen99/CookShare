@@ -1,5 +1,4 @@
 import time
-from typing import Dict
 from pydantic import BaseModel
 import jwt
 
@@ -19,7 +18,7 @@ class TokenResponse(BaseModel):
 secret_key = Settings().secret_key
 
 
-def sign_jwt(user_id: str, role: str='user') -> Dict[str, str]:
+def sign_jwt(user_id: str, role: str='user') -> dict[str, str]:
     # Set the expiry time.
     payload = {
         'user_id': user_id,

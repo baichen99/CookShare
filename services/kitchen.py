@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional
 from beanie import Document
 from beanie import PydanticObjectId
 from beanie.exceptions import DocumentNotFound
@@ -13,8 +13,8 @@ class Kitchen(Document):
     description: str
     address: str
     price: Optional[int]
-    facilities: Optional[List[str]] = []
-    available_times: Optional[List[str]] = []
+    facilities: Optional[list[str]] = []
+    available_times: Optional[list[str]] = []
     owner_id: PydanticObjectId
     created_at: datetime = Field(default_factory=datetime.now)
     update_at: datetime = Field(default_factory=datetime.now)
@@ -34,7 +34,8 @@ class Kitchen(Document):
         return d
 
 # 实现CRUD
-async def create_kitchen(kitchen: Kitchen) -> Kitchen:
+async def create_kitchen(values: dict) -> Kitchen:
+    kitchen = Kitchen(**values)
     kitchen_ = await kitchen.insert()
     return kitchen_
 
@@ -42,15 +43,15 @@ async def get_kitchen_by_id(id: PydanticObjectId) -> Kitchen:
     kitchen = await Kitchen.get(id)
     return kitchen
 
-async def update_kitchen(id: PydanticObjectId, kitchen: Kitchen) -> Kitchen:
-    kitchen_ = await get_kitchen_by_id(id)
-    if not kitchen_:
+async def update_kitchen(id: PydanticObjectId, values: dict) -> Kitchen:
+    kitchen = await get_kitchen_by_id(id)
+    if not kitchen:
         raise DocumentNotFound
-    values = kitchen.dict(exclude_unset=True)
     for key, value in values.items():
-        setattr(kitchen_, key, value)
-    await kitchen_.save()
-    return kitchen_
+        setattr(kitchen, key, value)
+    await kitchen.save()
+    # return 201
+
 
 async def delete_kitchen(id: PydanticObjectId) -> None:
     kitchen = await get_kitchen_by_id(id)
@@ -58,11 +59,11 @@ async def delete_kitchen(id: PydanticObjectId) -> None:
         raise DocumentNotFound
     await kitchen.delete()
 
-async def get_kitchens_by_owner_id(owner_id: PydanticObjectId) -> List[Kitchen]:
+async def get_kitchens_by_owner_id(owner_id: PydanticObjectId) -> list[Kitchen]:
     kitchens = await Kitchen.find(Kitchen.owner_id == owner_id).to_list()
     return kitchens
 
-async def get_kitchens(query: KitchenQuery) -> List[Kitchen]:
+async def get_kitchens(query: KitchenQuery) -> list[Kitchen]:
     query_list = []
     if query.name:
         query_list.append(RegEx(Kitchen.name, query.name))

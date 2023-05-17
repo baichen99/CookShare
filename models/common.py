@@ -1,5 +1,5 @@
 from enum import IntEnum
 
-class Order(IntEnum):
+class SortOrder(IntEnum):
     asc = 1
     desc = -1

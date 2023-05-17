@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional
 from beanie import Document, Indexed
 from beanie import PydanticObjectId
 
@@ -20,17 +20,18 @@ async def get_admin_by_email(email: str):
     admin = await Admin.find_one(Admin.email == email)
     return admin
 
-async def get_admins(skip: int = 0, limit: int = 100, sort_by: str = "email", order: str = "asc") -> List[Admin]:
+async def get_admins(skip: int = 0, limit: int = 100, sort_by: str = "email", order: str = "asc") -> list[Admin]:
     admins = await Admin.find().skip(skip).limit(limit).sort(sort_by, order).to_list()
     return admins
 
-async def create_admin(admin: Admin) -> Admin:
+async def create_admin(values: dict) -> Admin:
+    admin = Admin(**values)
     admin_ = await admin.create()
     return admin_
 
-async def update_admin(id: PydanticObjectId, admin: Admin) -> Admin:
+async def update_admin(id: PydanticObjectId, values: dict) -> Admin:
+
     admin_ = await Admin.find_one(Admin.id == id)
-    values = admin.dict(exclude_unset=True)
     for key, value in values.items():
         setattr(admin_, key, value)
     await admin_.save()
